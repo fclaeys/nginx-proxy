@@ -47,7 +47,13 @@ server {
 	proxy_buffering off;
 	error_log /proc/self/fd/2;
 	access_log /proc/self/fd/1;
+	proxy_set_header Host       $http_host;   
+  	proxy_set_header X-Real-IP  $remote_addr;
+  
+  	client_max_body_size 0;
 
+  	chunked_transfer_encoding on;
+	
 	location / {
 		proxy_pass http://{{ $host }};
 		include /etc/nginx/proxy_params;
